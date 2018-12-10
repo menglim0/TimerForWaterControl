@@ -9,8 +9,10 @@
 
 #define LED1_Off() GPIO_SetBits(GPIOB,GPIO_Pin_12)
 #define LED2_Off() GPIO_ResetBits(GPIOB,GPIO_Pin_6)
+#define Int_1Min 60
 
 uint32_t Delay_Cnt,total_delay_Time=1800;
+
 uint8_t Button_Right_Status,Button_Left_Status,Button_Left_DelayCnt,Button_Right_DelayCnt;
 
 
@@ -51,6 +53,26 @@ Counter_State Counter_State_control;
 		if(Bit_SET==Button_Right_Status)
 		{
 			Button_Right_DelayCnt++;
+			if(Button_Right_DelayCnt>10&&Button_Right_State==Normal_Cnt)
+			{
+			Button_Right_State=Set_CountDown;
+			total_delay_Time = total_delay_Time-Int_1Min;	
+			LED2_Off();//LED1输出高
+				Button_Right_DelayCnt=0;
+			}
+		else if(Bit_RESET==Button_Right_Status&&Button_Right_State!=Normal_Cnt)
+		{
+				Button_Right_DelayCnt++;
+					if(Button_Right_DelayCnt>10&&Counter_State_control== Set_CountDown)
+					{		
+					Button_Right_State=Normal_Cnt;
+					}
+
+		}
+		/*
+		if(Bit_SET==Button_Right_Status)
+		{
+			Button_Right_DelayCnt++;
 			if(Button_Right_DelayCnt>100&&Button_Right_State==Normal_Cnt)
 			{
 			Button_Right_State=LongPushDown;
@@ -61,6 +83,8 @@ Counter_State Counter_State_control;
 			Button_Right_State=ShortPushDown;
 		total_delay_Time--;
 		}
+		
+		
 			
 		LED1_On(); //LED0输出低
 		
@@ -106,7 +130,7 @@ Counter_State Counter_State_control;
 			
 		LED1_On(); //LED0输出低
 		//LED2_On();//LED1输出gao
-		}
+		}*/
 
 		delay_ms(13);
 		Delay_Cnt++;
@@ -149,5 +173,6 @@ Counter_State Counter_State_control;
 			Delay_Cnt=0;
 		}
 	}
+ }
  }
 
