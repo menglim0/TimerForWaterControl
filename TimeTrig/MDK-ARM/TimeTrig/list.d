@@ -1,0 +1,13 @@
+timetrig\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/list.c
+timetrig\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+timetrig\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+timetrig\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+timetrig\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+timetrig\list.o: ../Inc/FreeRTOSConfig.h
+timetrig\list.o: ../Inc/main.h
+timetrig\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+timetrig\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+timetrig\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+timetrig\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+timetrig\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+timetrig\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
