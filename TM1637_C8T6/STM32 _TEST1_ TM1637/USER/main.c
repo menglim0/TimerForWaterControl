@@ -53,19 +53,43 @@ Counter_State Counter_State_control;
 		if(Bit_SET==Button_Right_Status)
 		{
 			Button_Right_DelayCnt++;
-			if(Button_Right_DelayCnt>10&&Button_Right_State==Normal_Cnt)
+			if(Button_Right_DelayCnt>10&&Counter_State_control==Normal_Cnt)
 			{
-			Button_Right_State=Set_CountDown;
+			Counter_State_control=Set_CountDown;
 			total_delay_Time = total_delay_Time-Int_1Min;	
 			LED2_Off();//LED1输出高
 				Button_Right_DelayCnt=0;
 			}
-		else if(Bit_RESET==Button_Right_Status&&Button_Right_State!=Normal_Cnt)
+		}
+		else if(Bit_RESET==Button_Right_Status&&Counter_State_control!=Normal_Cnt)
 		{
 				Button_Right_DelayCnt++;
 					if(Button_Right_DelayCnt>10&&Counter_State_control== Set_CountDown)
 					{		
-					Button_Right_State=Normal_Cnt;
+					Counter_State_control=Normal_Cnt;
+						Button_Right_DelayCnt=0;
+					}
+
+		}
+		
+		if(Bit_SET==Button_Left_Status)
+		{
+			Button_Left_DelayCnt++;
+			if(Button_Left_DelayCnt>10&&Counter_State_control==Normal_Cnt)
+			{
+			Counter_State_control=Set_CountUp;
+			total_delay_Time = total_delay_Time+Int_1Min;	
+			LED2_Off();//LED1输出高
+				Button_Left_DelayCnt=0;
+			}
+		}
+		else if(Bit_RESET==Button_Right_Status&&Counter_State_control!=Normal_Cnt)
+		{
+				Button_Left_DelayCnt++;
+					if(Button_Left_DelayCnt>10&&Counter_State_control== Set_CountUp)
+					{		
+					Counter_State_control=Normal_Cnt;
+						Button_Left_DelayCnt=0;
 					}
 
 		}
@@ -174,5 +198,5 @@ Counter_State Counter_State_control;
 		}
 	}
  }
- }
+
 
