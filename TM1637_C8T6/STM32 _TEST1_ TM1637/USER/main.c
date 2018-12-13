@@ -3,6 +3,7 @@
 #include "sys.h"
 #include "TM1637.h"
 #include "button.h"
+#include <stdbool.h>
 
 #define LED1_On() GPIO_ResetBits(GPIOB,GPIO_Pin_12)
 #define LED2_On() GPIO_SetBits(GPIOB,GPIO_Pin_6)
@@ -11,12 +12,14 @@
 #define LED2_Off() GPIO_ResetBits(GPIOB,GPIO_Pin_6)
 #define Int_1Min 60
 
-uint32_t Delay_Cnt,total_delay_Time=1800;
+uint32_t Delay_Cnt,total_delay_Time=180;
 
 uint8_t Button_Right_Status,Button_Left_Status,Button_Left_DelayCnt,Button_Right_DelayCnt;
 
 
-uint8_t display_10min,display_1min,display_10s,display_1s,display_point;
+uint8_t display_10min,display_1min,display_10s,display_1s,display_point,pulse_hold_time;
+
+bool FlowDelayTime;
 
 typedef enum 
 {
@@ -175,6 +178,7 @@ Counter_State Counter_State_control;
 				else
 				{
 				total_delay_Time--;
+					pulse_hold_time=0;
 				}
 			}
 			else
@@ -182,9 +186,10 @@ Counter_State Counter_State_control;
 				total_delay_Time=1800;
 			}
 			
-			if(total_delay_Time==0)
+			if(total_delay_Time==0&&FlowDelayTime==false)
 			{
 			LED2_On();//LED1Êä³ö¸
+				FlowDelayTime=true;
 			}
 			display_10min = total_delay_Time/600;
 			display_1min = total_delay_Time/60%10;
@@ -195,6 +200,19 @@ Counter_State Counter_State_control;
 			TM1637_AdressDisplay(display_10min,display_1min,display_10s,display_1s,display_point);
 			//TM1637_AdressDisplay(1,2,3,9,display_point);
 			Delay_Cnt=0;
+		}
+		
+		if(FlowDelayTime==true)
+		{
+			
+			if(pulse_hold_time>=10)
+			{
+			LED2_Off();
+			}
+			else
+			{
+				pulse_hold_time++;
+			}
 		}
 	}
  }
